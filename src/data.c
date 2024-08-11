@@ -1,9 +1,7 @@
 #include "data.h"
-
 #include <stdio.h>
 #include <string.h>
 #include <omp.h>
-
 #include "csvparser.h"
 #include "utils.h"
 
