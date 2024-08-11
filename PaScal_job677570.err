@@ -1,0 +1,12 @@
+[32m[Pascal][0m Running with ['cores', 'input', 'repetitions']
+[32m[Pascal][0m Cores: 32 Input: 0 
+[32m[Pascal][0m Total time 0.9275617599487305
+[32m[Pascal][0m Cores: 32 Input: 1 
+[32m[Pascal][0m Total time 1.670522689819336
+[32m[Pascal][0m Cores: 32 Input: 2 
+[32m[Pascal][0m Total time 3.1229937076568604
+[32m[Pascal][0m Cores: 32 Input: 3 
+[32m[Pascal][0m Total time 6.63423752784729
+[32m[Pascal][0m Cores: 32 Input: 4 
+[32m[Pascal][0m Total time 13.103291511535645
+[32m[Pascal][0m Cores: 32 Input: 5 
