@@ -7,7 +7,6 @@
 #include "tree.h"
 #include "utils.h"
 
-// 参考：https://github.com/dmlc/xgboost/blob/4224c08cacceba3f83f90e387c07aa6205a83bfa/src/objective/regression_loss.h#L17
 void calGHForRegression(double *predy, Data *Xy, GradientPair *gpair) {
     //#pragma omp parallel for
     for (int i = 0; i < Xy->n_example; i++) {
@@ -16,7 +15,6 @@ void calGHForRegression(double *predy, Data *Xy, GradientPair *gpair) {
     }
 }
 
-// 参考：https://github.com/dmlc/xgboost/blob/4224c08cacceba3f83f90e387c07aa6205a83bfa/src/objective/regression_loss.h#L67
 void calGHForBinary(double *predy, Data *Xy, GradientPair *gpair) {
     //#pragma omp parallel for
     for (int i = 0; i < Xy->n_example; i++) {
@@ -26,7 +24,6 @@ void calGHForBinary(double *predy, Data *Xy, GradientPair *gpair) {
     }
 }
 
-// 参考：https://github.com/dmlc/xgboost/blob/4224c08cacceba3f83f90e387c07aa6205a83bfa/src/objective/multiclass_obj.cu#L96
 void calGHForMulti(double *predy, Data *Xy, GradientPair *gpair) {
     int n_group = Xy->n_group;
     #pragma omp parallel for
