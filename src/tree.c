@@ -108,6 +108,30 @@ TreeNode *splitNode(Data *Xy, Subset *index_subset, int cur_depth, GradientPair 
     return ret;
 }
 
+void fitTree(Data *Xy, GradientPair *gpair, XGBoostTree *tree) {
+    Subset *ss = initSubset(Xy->n_example, 1);
+    tree->root = splitNode(Xy, ss, 0, gpair, tree);
+
+    freeSubset(ss);
+}
+
+void predictTree(Data *Xy, double *outy, XGBoostTree *tree) {
+    #pragma omp parallel for
+    for (int i = 0; i < Xy->n_example; i++) {
+        TreeNode *node = tree->root;
+
+        while (!isLeaf(node)) {
+            double t = Xy->X[i][node->feature_id];
+
+            if (t <= node->info.split_cond)
+                node = node->left;
+            else
+                node = node->right;
+        }
+        outy[i] = node->info.leaf_value;
+    }
+}
+
 void printNode(TreeNode *node, int depth) {
     for (int i = 0; i < depth; i++) printf("\t");
     if (isLeaf(node)) printf("leaf value: %f\n", node->info.leaf_value);

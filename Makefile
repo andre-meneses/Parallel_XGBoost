@@ -1,4 +1,4 @@
-TARGET := test1
+TARGET := Parallel-XGBoost
 
 SOURCES := main.c ./src/*.c
 CFLAGS := -I./include -fopenmp

@@ -7,5 +7,6 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=32
 #SBATCH --time=0-1:30
+#SBATCH --exclusive
 
-pascalanalyzer -t aut -c 1,2,4,8,16,32 -i 8123,16246,32492,64984,129968,259936,519872,1039744 -o test1.json ./test1
+pascalanalyzer -t aut -c 1,2,4,8,16,32 -i 8123,16246,32492,64984,129968,259936,519872,1039744 -o output.json ./Parallel-XGBoost
