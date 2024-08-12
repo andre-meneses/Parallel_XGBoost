@@ -29,14 +29,17 @@ void calGHForMulti(double *predy, Data *Xy, GradientPair *gpair) {
     #pragma omp parallel for
     for (int i = 0; i < Xy->n_example; i++) {
         double wmax = predy[i * n_group];
+
         for (int j = 1; j < n_group; j++) {
             wmax = fmax(wmax, predy[i * n_group + j]);
         }
         double wsum = 0;
+
         for (int j = 0; j < n_group; j++) {
             wsum += exp(predy[i * n_group + j] - wmax);
         }
         int label = Xy->y[i];
+
         for (int j = 0; j < n_group; j++) {
             double p = exp(predy[i * n_group + j] - wmax) / wsum;
             gpair[i * n_group + j].g = label == j ? p - 1.0 : p;
@@ -70,6 +73,7 @@ XGBoostModel *createXGBoostModel(enum model_type type) {
 void fitModel(Data *Xy, XGBoostModel *model) {
     if (model->mtype == MultiClassification){
         // Count the number of classes, ensuring y values are like [0,1,...]
+        #pragma omp parallel for 
         for (int i = 0; i < Xy->n_example; i++) {
             int ty = (int)(Xy->y[i]);
             if (ty > Xy->n_group)
@@ -97,8 +101,8 @@ void fitModel(Data *Xy, XGBoostModel *model) {
                 outy[j] += t[j] * model->shrinkage;
         }
     } else {
-        GradientPair *tmp_gpair =
-            mallocOrDie(sizeof(GradientPair) * Xy->n_example);
+        GradientPair *tmp_gpair = mallocOrDie(sizeof(GradientPair) * Xy->n_example);
+        #pragma omp parallel for
         for (int i = 0; i < model->n_estimator; i++) {
             model->calGradientAndHessian(outy, Xy, gpair);
             #pragma omp parallel for
@@ -138,12 +142,13 @@ void predictModel(Data *Xy, double *outy, XGBoostModel *model) {
                 outy[j] += t[j] * model->shrinkage;
         }
         if (model->mtype == BinaryClassification)
-            //#pragma omp parallel for
+            #pragma omp parallel for
             for (int i = 0; i < Xy->n_example; i++)
                 outy[i] = sigmoid(outy[i]) >= 0.5;
     } else {
         double *tout = mallocOrDie(sizeof(double) * Xy->n_example * n_group);
         memset(tout, 0, sizeof(double) * Xy->n_example * n_group);
+        #pragma omp parallel for collapse(2)
         for (int i = 0; i < model->n_estimator; i++) {
             //#pragma omp parallel for
             for (int j = 0; j < model->n_group; j++) {
