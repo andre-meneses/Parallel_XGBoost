@@ -1,0 +1,9 @@
+[32m[Pascal][0m Running with ['cores', 'input', 'repetitions']
+[32m[Pascal][0m Cores: 32 Input: 0 
+[32m[Pascal][0m Total time 1.6504178047180176
+[32m[Pascal][0m Cores: 32 Input: 1 
+[32m[Pascal][0m Total time 2.3325607776641846
+[32m[Pascal][0m Cores: 32 Input: 2 
+[32m[Pascal][0m Total time 4.277892827987671
+[32m[Pascal][0m Cores: 32 Input: 3 
+slurmstepd-r1i1n4: error: *** JOB 677571 ON r1i1n4 CANCELLED AT 2024-08-10T22:01:59 ***
